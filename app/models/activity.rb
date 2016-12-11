@@ -3,16 +3,16 @@ class Activity < ActiveRecord::Base
 	belongs_to :detail
 	require 'matrix'
 
-	# def tf
-	# 	document1 = TfIdfSimilarity::Document.new("200 g Entrecôte hovädzí steak (Rib eye steak) s pečenými zemiakmi a pfefer omáčkou")
-	# 	document2 = TfIdfSimilarity::Document.new("200 g Steak z hovädzej sviečkovice s pečenými zemiakmi a pfefer omáčkou")
-	# 	document3 = TfIdfSimilarity::Document.new("200 g Steak z hovädzej sviečkovice s pečenými zemiakmi a pfefer omáčkou")
-	# 	corpus = [document1, document2, document3]
-	# 	model = TfIdfSimilarity::TfIdfModel.new(corpus)
-	# 	matrix = model.similarity_matrix
-	# 	puts matrix[model.document_index(document3), model.document_index(document2)]
-  #
-	# end
+	def tf
+		document1 = TfIdfSimilarity::Document.new("Vo wellness hoteli")
+		document2 = TfIdfSimilarity::Document.new("Vo wellness hoteloch")
+		document3 = TfIdfSimilarity::Document.new("Wellness hotel")
+		corpus = [document1, document2, document3]
+		model = TfIdfSimilarity::TfIdfModel.new(corpus)
+		matrix = model.similarity_matrix
+		puts matrix[model.document_index(document1), model.document_index(document2)]
+
+	end
 
 
 

@@ -27,19 +27,20 @@ require 'csv'
 # 	a.save
 # end
 #
-csv_text = File.read(Rails.root.join('lib','seeds','test_activity_v2.csv'))
-csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-csv.each do |row|
-	a = TestActivity.new
-	a.id = row['id']
-	a.user_id = row['user_id']
-	a.deal_item_id = row['dealitem_id']
-	a.deal_id = row['deal_id']
-	a.quantity = row['quantity']
-	a.market_price = row['market_price']
-	a.create_time = row['create_time']
-	a.save
-end
+
+# csv_text = File.read(Rails.root.join('lib','seeds','test_activity_v2.csv'))
+# csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+# csv.each do |row|
+# 	a = TestActivity.new
+# 	a.id = row['id']
+# 	a.user_id = row['user_id']
+# 	a.deal_item_id = row['dealitem_id']
+# 	a.deal_id = row['deal_id']
+# 	a.quantity = row['quantity']
+# 	a.market_price = row['market_price']
+# 	a.create_time = row['create_time']
+# 	a.save
+# end
 
 # csv_text = File.read(Rails.root.join('lib','seeds','train_deal_details.csv'))
 # csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
@@ -56,10 +57,15 @@ end
 # 	d.save
 # end
 #
-# csv_text = File.read(Rails.root.join('lib','seeds','train_activity_v2.csv'))
-# csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-# csv.each do |row|
-# 	a = Activity.find(row['id'])
-#   a.team_price = row['team_price']
-# 	a.save
-# end
+csv_text = File.read(Rails.root.join('lib','seeds','korpus.csv'))
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+i = 0
+csv.each do |row|
+	s = Stem.new
+  s.norm = row['norm']
+  s.word = row['word']
+  s.pad = row['pad']
+  s.save
+  i += 1
+  puts i if i%10000 == 0
+end
