@@ -1,17 +1,17 @@
 require 'csv'
-# csv_text = File.read(Rails.root.join('lib','seeds','train_dealitems.csv'))
-# csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-# csv.each do |row|
-# 	d = DealItem.new
-# 	d.id = row['id']
-# 	d.deal_id = row['deal_id']
-# 	d.title_dealitem = row['title_dealitem']
-# 	d.coupon_text1 = row['coupon_text1']
-# 	d.coupon_text2 = row['coupon_text2']
-# 	d.coupon_begin_time = row['coupon_begin_time']
-# 	d.coupon_end_time = row['coupon_end_time']
-# 	d.save
-# end
+csv_text = File.read(Rails.root.join('lib','seeds','test_dealitems.csv'))
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+csv.each do |row|
+	d = TestDealItem.new
+	d.id = row['id']
+	d.deal_id = row['deal_id']
+	d.title_dealitem = row['title_dealitem']
+	d.coupon_text1 = row['coupon_text1']
+	d.coupon_text2 = row['coupon_text2']
+	d.coupon_begin_time = row['coupon_begin_time']
+	d.coupon_end_time = row['coupon_end_time']
+	d.save
+end
 
 # csv_text = File.read(Rails.root.join('lib','seeds','train_activity_v2.csv'))
 # csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
@@ -42,10 +42,10 @@ require 'csv'
 # 	a.save
 # end
 
-# csv_text = File.read(Rails.root.join('lib','seeds','train_deal_details.csv'))
+# csv_text = File.read(Rails.root.join('lib','seeds','test_deal_details.csv'))
 # csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 # csv.each do |row|
-# 	d = Detail.new
+# 	d = TestDetail.new
 # 	d.deal_item_id = row['id']
 # 	d.title_deal = row['title_deal']
 # 	d.title_desc = row['title_desc']
@@ -56,16 +56,16 @@ require 'csv'
 # 	d.gpslong = row['gpslong']
 # 	d.save
 # end
-#
-csv_text = File.read(Rails.root.join('lib','seeds','korpus.csv'))
-csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-i = 0
-csv.each do |row|
-	s = Stem.new
-  s.norm = row['norm']
-  s.word = row['word']
-  s.pad = row['pad']
-  s.save
-  i += 1
-  puts i if i%10000 == 0
-end
+
+# csv_text = File.read(Rails.root.join('lib','seeds','korpus.csv'))
+# csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+# i = 0
+# csv.each do |row|
+# 	s = Stem.new
+#   s.norm = row['norm']
+#   s.word = row['word']
+#   s.pad = row['pad']
+#   s.save
+#   i += 1
+#   puts i if i%10000 == 0
+# end

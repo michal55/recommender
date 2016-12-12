@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161210230129) do
+ActiveRecord::Schema.define(version: 20161212010547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,10 +60,8 @@ ActiveRecord::Schema.define(version: 20161210230129) do
     t.string   "strategy"
   end
 
-  create_table "stems", force: :cascade do |t|
-    t.string   "norm"
+  create_table "stops", force: :cascade do |t|
     t.string   "word"
-    t.string   "pad"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -78,6 +76,36 @@ ActiveRecord::Schema.define(version: 20161210230129) do
     t.float    "team_price"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "test_deal_items", force: :cascade do |t|
+    t.integer  "deal_id"
+    t.string   "title_dealitem"
+    t.string   "coupon_text1"
+    t.string   "coupon_text2"
+    t.string   "coupon_begin_time"
+    t.string   "coupon_end_time"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "test_details", force: :cascade do |t|
+    t.string   "title_deal"
+    t.string   "title_desc"
+    t.string   "title_city"
+    t.integer  "deal_id"
+    t.integer  "partner_id"
+    t.float    "gpslat"
+    t.float    "gpslong"
+    t.integer  "deal_item_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.text     "keywords",   default: [],              array: true
   end
 
 end

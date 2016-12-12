@@ -1,6 +1,8 @@
 require 'net/http'
 module Train
   extend self
+  @stop_words = Stop.all.pluck(:word)
+
   def basic user_id
     deal_ids = Activity.where(user_id: user_id).pluck(:deal_id)
     deals = Detail.where(deal_id: deal_ids).pluck(:title_deal)
@@ -9,11 +11,10 @@ module Train
       merged += bash(process(title))
     end
     top_keywords = []
-    keywords = merged.keywords(Highscore::Blacklist.load(['alebo', 'a']))
+    keywords = merged.keywords(Highscore::Content)
     keywords.rank[0...10].each do |k|
       top_keywords.push(k.text)
     end
-
     top_keywords
   end
 
@@ -30,10 +31,34 @@ module Train
   end
 
   def process(sentence)
-    arr = ["alebo", "ale"]
-    I18n.transliterate(sentence).downcase.delete('^a-z ').split.delete_if{|x| arr.include?(x)}.join(' ')
+    I18n.transliterate(sentence).downcase.delete('^a-z ').split.delete_if{|x| @stop_words.include?(x)}.join(' ')
   end
+
+  def top_users
+    time = Time.now
+    top = Activity.group(:user_id).count.sort_by{|k,v| v}.reverse[0...2000].map{|k,v| k}
+    top.each do |user_id|
+      user = User.new
+      user.id = user_id
+      user.keywords = basic user_id
+      user.save
+    end
+    puts Time.now - time
+  end
+
   
+
+  # def stopwords
+  #   f = File.open("/home/michal/workspace/ruby/recommender/recommender/lib/seeds/stop1.txt", "r")
+  #     f.each_line do |t|
+  #       w = Stop.new
+  #       w.word = I18n.transliterate(t[0...-1])
+  #       w.save
+  #   end
+  # end
+
+
+
 end
 
 # 523801

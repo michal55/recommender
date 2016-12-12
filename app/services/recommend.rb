@@ -1,7 +1,8 @@
 module Recommend
   extend self
+  @test_deals = TestDetail.all.pluck(:deal_id)
   def random
-    deal_items = DealItem.order("RANDOM()").first(10)
+    deal_items = TestDealItem.order("RANDOM()").first(10)
     result = []
     deal_items.each do |d|
       result.push(d.deal_id)
@@ -14,7 +15,7 @@ module Recommend
   end
 
   def most_popular
-    top = Activity.group(:deal_id).count.sort_by{|k,v| v}.reverse
+    top = Activity.where(deal_id: @test_deals).group(:deal_id).count.sort_by{|k,v| v}.reverse
     top[0...10].map{|k,v| k}
     # TestActivity.select("deal_id, count(*) as total_count").group("deal_id").order("total_count").reverse_order
   end
@@ -34,8 +35,8 @@ module Recommend
     stats.total = 0
     stats.strategy = mode
     users = TestActivity.order("RANDOM()").limit(user_count).pluck(:user_id)
+    recommended = recommend(mode)
     users.each do |user|
-      recommended = recommend(mode)
       stats.total += 1
       stats.hits += 1 if recommended.include?(evaluate(user).deal_id)
     end
