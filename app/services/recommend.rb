@@ -14,9 +14,9 @@ module Recommend
     TestActivity.where(user_id: user_id).order("RANDOM()").first
   end
 
-  def most_popular
+  def most_popular n
     top = Activity.where(deal_id: @test_deals).group(:deal_id).count.sort_by{|k,v| v}.reverse
-    top[0...10].map{|k,v| k}
+    top[0...n].map{|k,v| k}
     # TestActivity.select("deal_id, count(*) as total_count").group("deal_id").order("total_count").reverse_order
   end
 
@@ -24,7 +24,7 @@ module Recommend
     if mode.eql?('random')
       random
     elsif mode.eql?('most_popular')
-      most_popular
+      most_popular 10
     end
   end
 

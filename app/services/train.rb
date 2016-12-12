@@ -46,7 +46,7 @@ module Train
     puts Time.now - time
   end
 
-  
+
 
   # def stopwords
   #   f = File.open("/home/michal/workspace/ruby/recommender/recommender/lib/seeds/stop1.txt", "r")
