@@ -33,6 +33,7 @@ module Recommend
     stats = Stat.new
     stats.hits = 0
     stats.total = 0
+    stats.eval = 'p@k'
     stats.strategy = mode
     users = TestActivity.order("RANDOM()").limit(user_count).pluck(:user_id)
     recommended = recommend(mode)

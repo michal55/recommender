@@ -1,8 +1,7 @@
-require 'net/http'
 module Train
   extend self
   @stop_words = Stop.all.pluck(:word)
-
+  @test_deals = TestDetail.all.pluck(:deal_id)
   def basic user_id
     deal_ids = Activity.where(user_id: user_id).pluck(:deal_id)
     deals = Detail.where(deal_id: deal_ids).pluck(:title_deal)
@@ -36,7 +35,7 @@ module Train
 
   def top_users
     time = Time.now
-    top = Activity.group(:user_id).count.sort_by{|k,v| v}.reverse[0...2000].map{|k,v| k}
+    top = Activity.where(deal_id: @test_deals).group(:user_id).count.sort_by{|k,v| v}.reverse[40000...53641].map{|k,v| k}
     top.each do |user_id|
       user = User.new
       user.id = user_id
